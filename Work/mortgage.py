@@ -28,3 +28,5 @@ while principal > 0:
     
 print('Total paid', total_paid) 
 print('Months', month)
+
+#f' {month} at total of {principal}'
