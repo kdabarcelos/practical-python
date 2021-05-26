@@ -92,6 +92,12 @@ report = make_report(portfolio,prices)
 #for r in report:
        # print('%10s %10d %10.2f %10.2f' % r)
 
+#headers
+hearder = ('Name', 'Shares', 'Price', 'Change')
+print ('%10s %10s %10s %10s' % hearder)
+print (('-' *10 + ' ')* len(hearder))
+
 #better looking loop
 for name, shares, price, change in report:
        print(f'{name:>10s} {shares:>10d} {price:>10.2f} {change:>10.2f}')
+
