@@ -28,8 +28,8 @@ portfolio =  read_portfolio('Data/portfolio.csv')
 #print (portfolio)
 
 #better visualization 2.5
-from pprint import pprint
-pprint(portfolio)
+#from pprint import pprint
+#pprint(portfolio)
 
 # Exercise 2.6
 
@@ -52,8 +52,8 @@ def read_prices(filename):
 
 prices =  read_prices('Data/prices.csv')
 
-from pprint import pprint
-pprint(prices)
+#from pprint import pprint
+#pprint(prices)
 
 #compute basic total cost so far
 
@@ -70,6 +70,20 @@ for sum in portfolio:
     total_amount_now += prices[sum['name']]*sum['shares']
 
 #compute loss/gain
-print ('Value in market before was', total_before)
-print ('Value in market now is', total_amount_now)
-print ('Gain/loss at the end', total_amount_now - total_before)
+#print ('Value in market before was', total_before)
+#print ('Value in market now is', total_amount_now)
+#print ('Gain/loss at the end', total_amount_now - total_before)
+
+def make_report(portfolio, prices):
+    list = []
+    for s in portfolio:
+        price_now = prices[s['name']]
+        diff = price_now - s['price']
+        s_tuples = (s['name'], s['shares'], price_now, diff) #create tuples
+        list.append(s_tuples)
+    return list
+
+report = make_report(portfolio,prices)
+for r in report:
+        print(r)
+
