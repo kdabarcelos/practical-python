@@ -13,6 +13,7 @@ def read_portfolio(filename):
         rows = csv.reader(f)
         headers = next(rows)
         for row in rows:
+            record = dict(zip(headers, row))
             naming_value = {
                 'name': row[0],
                 'shares': int(row[1]),
@@ -93,9 +94,9 @@ report = make_report(portfolio,prices)
        # print('%10s %10d %10.2f %10.2f' % r)
 
 #headers
-hearder = ('Name', 'Shares', 'Price', 'Change')
-print ('%10s %10s %10s %10s' % hearder)
-print (('-' *10 + ' ')* len(hearder))
+header_1 = ('Name', 'Shares', 'Price', 'Change')
+print ('%10s %10s %10s %10s' % header_1)
+print (('-' *10 + ' ')* len(header_1))
 
 #better looking loop
 for name, shares, price, change in report:
