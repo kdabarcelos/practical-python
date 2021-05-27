@@ -2,33 +2,27 @@
 #
 # Exercise 1.27
 
-f = open('Data/portfolio.csv', 'rt')
-headers = next(f)
-total = 0
+import csv
+def portfolio_cost(filename):
+    total = 0
 
-for line in f:
-    list = line.split(',')
-    stock_shares_1 = list[1]
-    stock_price_1 = list[2]
-    stock_shares = int(stock_shares_1)
-    stock_price = float(stock_price_1)
-    
-    shares_prices = stock_shares * stock_price
-    total = total + shares_prices
+    with open(filename) as f:
+        rows = csv.reader(f)
+        headers = next(rows)
 
-f.close()
+        for rowno, row in enumerate (rows, start=1):
+            record = dict(zip(headers, row))
+            try:
+                stock_shares_1 = record['shares']
+                stock_price_1 = record['price']
+                stock_shares = int(stock_shares_1)
+                stock_price = float(stock_price_1)
+                shares_prices = stock_shares * stock_price
+                total = total + shares_prices
+            except ValueError:
+                print (f'Row {rowno}: Bad row {row}')
+        return total
+            
+total =  portfolio_cost('Data/portfoliodate.csv')
 
-print('Total cost', total)
-
-
-
-
-
-
-
-#calculates how much it cost to purchase 
-# all of the shares in the portfolio. Hint: 
-# to convert a string to an integer, use int(s). 
-# To convert a string to a floating point, 
-# use float(s).
-
+print ("Total cost is", total)
