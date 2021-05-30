@@ -35,7 +35,7 @@ def read_prices(filename):
     return prices
 
 def make_report(portfolio, prices):
-    '''Computes the total cost (shares*price) of a portfolio file'''
+    '''Make a list (name, shares, price, and change) of tuples'''
     list = []
     for s in portfolio:
         price_now = prices[s['name']]
@@ -44,19 +44,8 @@ def make_report(portfolio, prices):
         list.append(s_tuples)
     return list
 
-def print_report(report):
+def print_report(report, prices):
     '''Print out the total cost (shares*price) of a portfolio file'''
-    total_before = 0 # start with 0
-    total_amount_now = 0
-    for sum in portfolio:
-        total_before += sum['price']*sum['shares'] # multiply dic with ['key names']
-        total_amount_now += prices[sum['name']]*sum['shares']
-
-    #compute loss/gain
-    print ('Value in market before was', total_before)
-    print ('Value in market now is', total_amount_now)
-    print ('Gain/loss at the end', total_amount_now - total_before)
-
     #headers
     header_1 = ('Name', 'Shares', 'Price', 'Change')
     print ('%10s %10s %10s %10s' % header_1)
@@ -67,7 +56,13 @@ def print_report(report):
         print(f'{name:>10s} {shares:>10d} {price:>10.2f} {change:>10.2f}')
     return (report)
 
-portfolio =  read_portfolio('Data/portfolio.csv')
-prices =  read_prices('Data/prices.csv')
-report = make_report(portfolio,prices)
-report_print = print_report(report)
+
+def portfolio_report (portfoliofile,pricefile):
+    '''Stock report of the portfokio and price files'''
+    
+    portfolio =  read_portfolio(portfoliofile)
+    prices =  read_prices(pricefile)
+    report = make_report(portfolio,prices)
+    report_print = print_report(report, prices)
+
+portfolio_report('Data/portfolio.csv', 'Data/prices.csv')
