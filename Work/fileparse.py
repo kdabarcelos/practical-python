@@ -46,10 +46,10 @@ def parse_csv(filename, select=None, types=None, has_headers=True, delimiter = '
             # Creating dictionary
             if headers:
                 record = dict(zip(headers, row))
-            
             # Creating tuple instead
             else:
                 record = tuple(row)
+            
             records.append(record)
 
     return records
