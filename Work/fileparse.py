@@ -1,7 +1,7 @@
 # fileparse.py
 import csv
 
-def parse_csv(filename, select=None, types=None, has_headers=True, delimiter = ','):
+def parse_csv(filename, select=None, types=None, has_headers=True, delimiter = ',', silence_errors=False):
     '''
     Parse a CSV file into a list of records
     '''
@@ -21,6 +21,7 @@ def parse_csv(filename, select=None, types=None, has_headers=True, delimiter = '
             headers = select   
         
         records = []   
+        #enumatering rows
         for rowno, row in enumerate (rows, 1):
             # Skip rows with blanket data
             if not row:    
@@ -36,9 +37,11 @@ def parse_csv(filename, select=None, types=None, has_headers=True, delimiter = '
                 try:
                     row = [func(val) for func, val in zip(types, row)]
                 except ValueError as e:
-                    print (f"Row {rowno}: Couldn't convert {row}")
-                    print (f"Row {rowno}: Reason {row}")
-
+                #in case of error is true
+                    if not silence_errors:
+                        print (f"Row {rowno}: Couldn't convert {row}")
+                        print (f"Row {rowno}: Reason {e}")
+                    continue
 
             # Creating dictionary
             if headers:
@@ -50,4 +53,3 @@ def parse_csv(filename, select=None, types=None, has_headers=True, delimiter = '
             records.append(record)
 
     return records
-
