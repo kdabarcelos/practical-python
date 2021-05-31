@@ -5,7 +5,7 @@ def parse_csv(filename, select=None, types=None, has_headers=True, delimiter = '
     '''
     Parse a CSV file into a list of records
     '''
-    
+    #deal selecting certain columns and dealing when has no headers
     if select and not has_headers:
         raise RuntimeError ('select argument requires column headers')
 
@@ -21,7 +21,7 @@ def parse_csv(filename, select=None, types=None, has_headers=True, delimiter = '
             headers = select   
         
         records = []   
-        for row in rows:
+        for rowno, row in enumerate (rows, 1):
             # Skip rows with blanket data
             if not row:    
                 continue
@@ -32,7 +32,13 @@ def parse_csv(filename, select=None, types=None, has_headers=True, delimiter = '
 
             # Converting to the correct type
             if types:
-                row = [func(val) for func, val in zip(types, row)]
+                #try and except to 
+                try:
+                    row = [func(val) for func, val in zip(types, row)]
+                except ValueError as e:
+                    print (f"Row {rowno}: Couldn't convert {row}")
+                    print (f"Row {rowno}: Reason {row}")
+
 
             # Creating dictionary
             if headers:
