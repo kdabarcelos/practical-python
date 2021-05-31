@@ -11,7 +11,13 @@ def portfolio_cost(filename):
     
     return sum ([s['shares']*s['price'] for s in portfolio])
             
+def main(args):
+    #2 args
+    if len(args) != 2:
+        raise SystemExit('Usage: %s portfoliofile' % args[0])
+    filename = args[1]
+    print ("Total cost is", portfolio_cost(filename))
 
-total =  portfolio_cost('Data/portfolio.csv')
-
-print ("Total cost is", total)
+if __name__ == '__main__':
+    import sys
+    main(sys.argv)
