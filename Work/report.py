@@ -6,12 +6,16 @@ import fileparse
 def read_portfolio(filename):
     '''Read a stock portfolio file into a list of dictionaries with keys
     name, shares, and price.'''
-    return fileparse.parse_csv(filename, select=['name', 'shares', 'price'], types = [str, int, float])
+    #Iterables
+    with open(filename) as lines:
+        return fileparse.parse_csv(lines, select=['name','shares','price'], types=[str,int,float])
 
 def read_prices(filename):
     '''Read a stock prices file into a dictionarie with keys name and price data'''
-    return dict(fileparse.parse_csv(filename, types=[str,float], has_headers=False))
-
+    #Iterables
+    with open(filename) as lines:
+        return dict(fileparse.parse_csv(lines, types=[str,float], has_headers=False))
+    
 def make_report(portfolio, prices):
     '''Make a list (name, shares, price, and change) of tuples'''
     list = []
@@ -41,7 +45,7 @@ def portfolio_report (portfoliofile,pricefile):
     portfolio =  read_portfolio(portfoliofile)
     prices =  read_prices(pricefile)
     report = make_report(portfolio,prices)
-    report_print = print_report(report, prices)
+    print_report(report)
 
 #main() function that accepts a list of command 
 # line options and produces the same output as 
@@ -50,6 +54,7 @@ def portfolio_report (portfoliofile,pricefile):
 def main(args):
     if len(args) != 3:
         raise SystemExit('Usage: %s portfile pricefile' % args[0])
+    #calling portfolio_report
     portfolio_report(args[1], args[2])
 
 if __name__ == '__main__':
