@@ -43,4 +43,15 @@ def portfolio_report (portfoliofile,pricefile):
     report = make_report(portfolio,prices)
     report_print = print_report(report, prices)
 
-portfolio_report('Data/portfolio.csv', 'Data/prices.csv')
+#main() function that accepts a list of command 
+# line options and produces the same output as 
+# before. 
+
+def main(args):
+    if len(args) != 3:
+        raise SystemExit('Usage: %s portfile pricefile' % args[0])
+    portfolio_report(args[1], args[2])
+
+if __name__ == '__main__':
+    import sys
+    main(sys.argv)
